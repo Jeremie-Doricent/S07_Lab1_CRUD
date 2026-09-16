@@ -20,7 +20,11 @@ namespace ZombieParty.Controllers
             List<Zombie> zombiesList = _baseDonnees.Zombies.Where(z => z.Point >=8).Include(z => z.ZombieType).ToList();
             return View(zombiesList);
         }
-
+        public IActionResult index()
+        {
+            List<Zombie> zombiesList = _baseDonnees.Zombies.Include(z => z.ZombieType).ToList();
+            return View(zombiesList);
+        }
         public IActionResult Create()
         {
             ZombieVM zombieVM = new ZombieVM();
@@ -52,5 +56,40 @@ namespace ZombieParty.Controllers
 
             return View(zombieVM);
         }
+        public IActionResult Edit(int id)
+        {
+            ZombieVM zombieVM = new ZombieVM();
+            zombieVM.Zombie = _baseDonnees.Zombies.Find(id);
+            zombieVM.ZombieTypeSelectList = _baseDonnees.ZombieTypes.Select(t => new SelectListItem
+            {
+                Text = t.TypeName,
+                Value = t.Id.ToString()
+            }).OrderBy(t => t.Text);
+
+            return View(zombieVM);
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ZombieVM zombieVM)
+        {
+            //Si le modèle est valide le zombie est ajouté et nous sommes redirigé vers index.
+            if (ModelState.IsValid)
+            {
+                _baseDonnees.Zombies.Add(zombieVM.Zombie);
+                _baseDonnees.SaveChanges();
+                TempData["Success"] = $"Zombie {zombieVM.Zombie.Name} added";
+                return this.RedirectToAction("Index");
+            }
+            zombieVM.ZombieTypeSelectList = _baseDonnees.ZombieTypes.Select(t => new SelectListItem
+            {
+                Text = t.TypeName,
+                Value = t.Id.ToString()
+            }).OrderBy(t => t.Text);
+
+            return View(zombieVM);
+        }
+
     }
 }
