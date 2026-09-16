@@ -91,5 +91,14 @@ namespace ZombieParty.Controllers
             return View(zombieVM);
         }
 
+        public IActionResult Delete(int id)
+        {
+            ZombieVM zombieVM = new ZombieVM();
+            zombieVM.Zombie = _baseDonnees.Zombies.Find(id);
+            zombieVM.Zombie.Id.remove
+
+            return View(zombieVM);
+        }
+
     }
 }
