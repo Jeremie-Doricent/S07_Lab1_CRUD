@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ZombieParty.Models.Data;
 
@@ -11,9 +12,11 @@ using ZombieParty.Models.Data;
 namespace ZombieParty.Migrations
 {
     [DbContext(typeof(ZombiePartyDbContext))]
-    partial class ZombiePartyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260916135448_SeedZombieTypeWeapon")]
+    partial class SeedZombieTypeWeapon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,18 +126,6 @@ namespace ZombieParty.Migrations
                             Price = 500m,
                             Qty = 30,
                             QtyBought = 1
-                        },
-                        new
-                        {
-                            WeaponId = 3,
-                            CreatedDate = new DateTime(2026, 9, 16, 10, 0, 9, 265, DateTimeKind.Local).AddTicks(633),
-                            Description = "null",
-                            Force = 250m,
-                            Image = "https://minecraft.fandom.com/wiki/Zombie",
-                            Name = "wfeda",
-                            Price = 0m,
-                            Qty = 0,
-                            QtyBought = 0
                         });
                 });
 
