@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using ZombieParty.Models;
 using ZombieParty.Models.Data;
 
@@ -14,10 +15,9 @@ namespace ZombieParty.Controllers
             _baseDonnees = baseDonnees;
         }
 
-        public IActionResult Index()
+        public IActionResult StrongestZombies()
         {
-            List<Zombie> zombiesList = _baseDonnees.Zombies.ToList();
-
+            List<Zombie> zombiesList = _baseDonnees.Zombies.Where(z => z.Point >=8).Include(z => z.ZombieType).ToList();
             return View(zombiesList);
         }
 
